@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mario Kart Wii – Chaos GP Picker</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: #f8fafc;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    h1 {
+      margin-bottom: 0.3rem;
+    }
+
+    p {
+      margin-top: 0;
+      opacity: 0.85;
+    }
+
+    select, button {
+      font-size: 1rem;
+      padding: 0.4rem 0.6rem;
+      margin-top: 1rem;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 1.5rem;
+    }
+
+    li {
+      background: #1e293b;
+      margin: 0.5rem auto;
+      padding: 0.6rem;
+      max-width: 420px;
+      border-radius: 6px;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🏁 Mario Kart Wii – Chaos GP</h1>
+  <p>Pure chaos · Balanced competitive · No repeats per cup</p>
+
+  <label>
+    Number of races:
+    <select id="raceCount">
+      <option value="4">4</option>
+      <option value="8">8</option>
+    </select>
+  </label>
+
+  <br>
+  <button onclick="generateGP()">Generate Grand Prix</button>
+
+  <ul id="results"></ul>
+
+  <script>
+    const courses = [
+      // Mushroom Cup
+      { name: "Luigi Circuit", cup: "Mushroom Cup" },
+      { name: "Moo Moo Meadows", cup: "Mushroom Cup" },
+      { name: "Mushroom Gorge", cup: "Mushroom Cup" },
+      { name: "Toad's Factory", cup: "Mushroom Cup" },
+
+      // Flower Cup
+      { name: "Mario Circuit", cup: "Flower Cup" },
+      { name: "Coconut Mall", cup: "Flower Cup" },
+      { name: "DK Summit", cup: "Flower Cup" },
+      { name: "Wario's Gold Mine", cup: "Flower Cup" },
+
+      // Star Cup
+      { name: "Daisy Circuit", cup: "Star Cup" },
+      { name: "Koopa Cape", cup: "Star Cup" },
+      { name: "Maple Treeway", cup: "Star Cup" },
+      { name: "Grumble Volcano", cup: "Star Cup" },
+
+      // Special Cup
+      { name: "Dry Dry Ruins", cup: "Special Cup" },
+      { name: "Moonview Highway", cup: "Special Cup" },
+      { name: "Bowser's Castle", cup: "Special Cup" },
+      { name: "Rainbow Road", cup: "Special Cup" },
+
+      // Shell Cup
+      { name: "GCN Peach Beach", cup: "Shell Cup" },
+      { name: "DS Yoshi Falls", cup: "Shell Cup" },
+      { name: "SNES Ghost Valley 2", cup: "Shell Cup" },
+      { name: "N64 Mario Raceway", cup: "Shell Cup" },
+
+      // Banana Cup
+      { name: "N64 Sherbet Land", cup: "Banana Cup" },
+      { name: "GBA Shy Guy Beach", cup: "Banana Cup" },
+      { name: "DS Delfino Square", cup: "Banana Cup" },
+      { name: "GCN Waluigi Stadium", cup: "Banana Cup" },
+
+      // Leaf Cup
+      { name: "DS Desert Hills", cup: "Leaf Cup" },
+      { name: "GBA Bowser Castle 3", cup: "Leaf Cup" },
+      { name: "N64 DK's Jungle Parkway", cup: "Leaf Cup" },
+      { name: "GCN Mario Circuit", cup: "Leaf Cup" },
+
+      // Lightning Cup
+      { name: "SNES Mario Circuit 3", cup: "Lightning Cup" },
+      { name: "DS Peach Gardens", cup: "Lightning Cup" },
+      { name: "GCN DK Mountain", cup: "Lightning Cup" },
+      { name: "N64 Bowser's Castle", cup: "Lightning Cup" }
+    ];
+
+    function generateGP() {
+      const raceCount = Number(document.getElementById("raceCount").value);
+      const shuffled = [...courses].sort(() => Math.random() - 0.5);
+      const usedCups = new Set();
+      const selected = [];
+
+      for (const course of shuffled) {
+        if (!usedCups.has(course.cup)) {
+          selected.push(course);
+          usedCups.add(course.cup);
+        }
+        if (selected.length === raceCount) break;
+      }
+
+      const list = document.getElementById("results");
+      list.innerHTML = "";
+
+      selected.forEach((course, index) => {
+        const li = document.createElement("li");
+        li.textContent = `Race ${index + 1}: ${course.name} (${course.cup})`;
+        list.appendChild(li);
+      });
+    }
+  </script>
+  
+<p style="font-size: 0.8rem; opacity: 0.6; margin-top: 2rem;">
+  Fan-made tool. Mario Kart is a trademark of Nintendo.
+</p>
+
+</body>
+</html>
